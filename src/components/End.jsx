@@ -346,7 +346,8 @@ const Small = () => {
                                 </div>
                                 <div className='email row'>
                                     <input className='mailbox col-12 col-lg-8 col-md-8' type='email' placeholder='Your Email Address' />
-                                    <button className='mailsubmit col-12 col-lg-4 col-md-3' type='submit' style={{ backgroundColor: '#e6007e', color: '#f0f0f0', border: 'none' }}>
+                                    <button className='mailsubmit col-12 col-lg-4 col-md-3' type='submit'
+                                        style={{ backgroundColor: '#e6007e', color: '#f0f0f0', border: 'none' }}>
                                         <span>Subscribe</span>
                                     </button>
                                 </div>

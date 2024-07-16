@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Prenav from "./Prenav";
 import Prenav2 from "./Prenav2";
 import Navbar from "./Navbar";
@@ -14,4 +13,4 @@ const MainNavbar = () => {
     )
 }
 
-export default MainNavbar;
+export default MainNavbar

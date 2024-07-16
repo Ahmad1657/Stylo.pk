@@ -1,20 +1,19 @@
 import React from 'react'
-
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
     <>
     <hr className='line'/>
     <div className='navbar1'>
-            <li style={{color:'red'}}> <Link className='link' to={"/"}>Sale</Link> </li>
-            <li> <Link className='link' to={"/summer-24"}>Summer'24</Link> </li>
-            <li>Women Shoes</li>
-            <li>Women Apperals</li>
-            <li>Bags</li>
-            <li>Kids</li>
-            <li>Accessories</li>
-            <li>Fragrances</li>
+            <Link className='link' to={'/sale'}>Sale</Link>
+            <Link className='link' to={'/summer-24'}>Summer'24</Link>  
+            <Link className='link' to={'/women-shoes'}>Women Shoes</Link>
+            <Link className='link' to={'/women-apperals'}>Women Apperals</Link>
+            <Link className='link' to={'/bags'}>Bags</Link>
+            <Link className='link' to={'/kids'}>Kids</Link>
+            <Link className='link' to={'/accessories'}>Accessories</Link>
+            <Link className='link' to={'/fragrances'}>Fragrances</Link>
     </div>
     </>
   )
