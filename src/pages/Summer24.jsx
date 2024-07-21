@@ -7,8 +7,9 @@ const Summer24 = () => {
   const [loader, setLoader] = useState(false);
   const fetchData = async () => {
     setLoader(true)
-    const response = await axios.get('https://fakestoreapi.com/products')
-    setProducts(response.data)
+    const response = await axios.get('http://localhost:8085/api/admin/product?category=summer24')
+    setProducts(response.data.product)
+    console.log(response)
     setLoader(false)
   }
   useEffect(() => {
@@ -24,14 +25,14 @@ const Summer24 = () => {
           products.map((product) => {
             return (
               <div className='card' style={{ width: '18rem' }}>
-                <img src={product.image} className='card-img-top' alt='...'/>
+                <img src={product.thumbnail} className='card-img-top' alt='...'/>
                 <div className='card-body'>
                   <h5 className='card-title'>{product.title}</h5>
                   <p className='card-text'>{product.description.slice(0 - 100)}</p>
-                  <h6 className='btn btn-danger'>Id :{product.id}</h6>
+                  {/* <h6 className='btn btn-danger'>Id :{product.id}</h6> */}
                   <h6 className='btn btn-primary'>US$ {product.price}</h6>
-                  <h6 className='btn btn-secondary'>Rate :{product.rating.rate}</h6>
-                  <h6 className='btn btn-secondary'>Count :{product.rating.count}</h6>
+                  {/* <h6 className='btn btn-secondary'>Rate :{product.rating.rate}</h6>
+                  <h6 className='btn btn-secondary'>Count :{product.rating.count}</h6> */}
                 </div>
               </div>
             )
