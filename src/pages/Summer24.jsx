@@ -1,44 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loader from '../components/Loader'
+import { Link } from 'react-router-dom'
 
 const Summer24 = () => {
   const [products, setProducts] = useState([])
   const [loader, setLoader] = useState(false);
   const fetchData = async () => {
     setLoader(true)
-    const response = await axios.get('http://localhost:8085/api/admin/product?category=summer24')
-    setProducts(response.data.product)
-    console.log(response)
+    const response = await axios.get('http://localhost:8080/api/admin/product?category=sedan')
+    setProducts(response.data.products)
     setLoader(false)
   }
   useEffect(() => {
     fetchData()
   }, [])
-  
+
   return (
 
     <>
 
-      { loader ? <Loader /> : <div className='pro'>
+      {loader ? <Loader /> : <div className='pro'>
         {
           products.map((product) => {
             return (
-              <div className='card' style={{ width: '18rem' }}>
-                <img src={product.thumbnail} className='card-img-top' alt='...'/>
-                <div className='card-body'>
-                  <h5 className='card-title'>{product.title}</h5>
-                  <p className='card-text'>{product.description.slice(0 - 100)}</p>
-                  {/* <h6 className='btn btn-danger'>Id :{product.id}</h6> */}
-                  <h6 className='btn btn-primary'>US$ {product.price}</h6>
-                  {/* <h6 className='btn btn-secondary'>Rate :{product.rating.rate}</h6>
-                  <h6 className='btn btn-secondary'>Count :{product.rating.count}</h6> */}
+              <Link to={`/product/${product._id}`}>
+                <div className='card' style={{ width: '18rem' }}>
+                  <img src={product.image} className='card-img-top' alt='...' width={400} height={200}/>
+                  <div className='card-body'>
+                    <h5 className='card-title'>{product.name}</h5>
+                    <p className='card-text'>{product.description.slice(0 - 100)}</p>
+                    <h6 className='btn btn-secondary'>Class :{product.category}</h6>
+                    <h6 className='btn btn-primary'>US$ {product.price}</h6>
+                    
+                  </div>
                 </div>
-              </div>
+              </Link>
             )
           })
         }
-      </div>  }
+      </div>}
 
     </>
 

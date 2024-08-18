@@ -34,7 +34,7 @@
     margin: 10px 0;
 }
 
-.empty {
+.collapsedsidepanel{
     width: 25%;
 }
 
@@ -131,13 +131,27 @@
     .payment_icons {
         text-align: right;
     }
+    .product img{
+        width: 500px;
+        height: 350px;
+    }
+    
+}
+
+@media screen and (min-width:992px) {
+    .sidepanelbutton{
+        display: none;
+    }
 }
 
 @media screen and (max-width:992px) {
     .navbar1 {
         display: none;
     }
-
+    .sidepanelbutton{
+        display: block;
+    }
+    
     .line {
         display: none;
     }
@@ -159,6 +173,10 @@
         display: flex;
         justify-content: center;
     }
+    .product img{
+        width: 470px;
+        height: 300px;
+    }
 }
 
 @media screen and (max-width:768px) {
@@ -167,11 +185,13 @@
         text-align: center;
     }
 
-    .icon3 {
+    .icons {
+        gap: 3px;
+    }
+    .icon2 {
         display: none;
     }
-
-    .icon4 {
+    .icon3 {
         display: none;
     }
 
@@ -201,6 +221,10 @@
         display: flex;
         justify-content: center;
     }
+    .product img{
+        width: 400px;
+        height: 250px;
+    }
 }
 
 @media screen and (max-width:480px) {
@@ -212,6 +236,10 @@
     .payment_icons {
         display: flex;
         justify-content: center;
+    }
+    .product img{
+        width: 0px;
+        height: 240px;
     }
 }
 
@@ -247,3 +275,49 @@
   }
   @keyframes l2 {to{transform: rotate(1turn)}}
 
+/* CollapsedSidePanel Code */
+  .sidepanel {
+    width: 0;
+    position: fixed;
+    z-index: 2000;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidepanel a {
+    padding: 8px 8px 8px 40px;
+    text-decoration: none;
+    font-size: 17px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidepanel a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: white;
+  }
