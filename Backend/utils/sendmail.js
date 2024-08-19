@@ -6,8 +6,8 @@ const verifyEmail=()=>{
         port: 587,
         secure: false, // Use `true` for port 465, `false` for all other ports
         auth: {
-          user: "annabel.turcotte@ethereal.email",
-          pass: "CRCeAVFzVWKsQenntD",
+          user: "libby12@ethereal.email",
+          pass: "QWebasy6wa533pm19N",
         },
       });
       
@@ -29,6 +29,6 @@ const verifyEmail=()=>{
       main().catch(console.error);
 }
 
-module.export=verifyEmail;
+module.exports=verifyEmail;
 
 

@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt")
 const Salt = 10;
 var jwt = require('jsonwebtoken');
-const verifyEmail = require('../utils/sendEmail');
+const sendmail = require('../utils/sendmail');
 const { Navigate } = require("react-router-dom");
 
 
@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
         user.save();
         const subject = "Welcome to Stylo";
         const text = `This is a greeting note for you as you have registered on our website.Thnks.This is your verification code ${randomNumber}`;
-        verifyEmail(user.email, subject, text);
+        sendmail(user.email, subject, text);
 
         res.json({ status: 200, message: "User created successfully", user })
     }
@@ -29,29 +29,37 @@ exports.register = async (req, res) => {
     }
 };
 
-exports.verifyUser= async (req, res) => {
+exports.verifyUser = async (req, res) => {
     try{
         const {code}= req.body;
-        // const {verifyCode} = req.body;
+        
        const user = await User.findOne({code:code});
-       console.log(user)
        
-      if(code===user.code){
+       
+      if(code === user.code){
         user.isEmailverified=true;
         user.code=null;
         user.save();
-        
+        var token = jwt.sign({ id: user._id }, 'abc123456');
       }
       else{
         return res.json ({status:404, message:"Wrong Verification Code", success:false})
       }
-      return res.json ({status:200, message:"Verified Successfully", success:true})
+      return res.json ({status:200, message:"Verified Successfully",token, success:true})
     }
     catch(err){
       console.log(err);
     }
 }
 
+exports.forgotPassword = async (req, res) => {
+  try{
+     
+  }
+  catch(err){
+    console.log(err);
+  }
+}
 
 exports.login = async (req, res) => {
     try {
