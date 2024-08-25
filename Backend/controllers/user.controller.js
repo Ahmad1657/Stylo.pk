@@ -2,12 +2,19 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt")
 const Salt = 10;
 var jwt = require('jsonwebtoken');
-const sendmail = require('../utils/sendmail');
-const { Navigate } = require("react-router-dom");
+const sendEmail = require('../utils/sendEmail');
 
 
 exports.register = async (req, res) => {
+    const { email } = req.body;
     try {
+
+        // Check if email already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+          return res.json({status:400, success: false, message: 'Email already exist'});
+     }
+        
         const { password } = req.body;
         const encryptedPassword = await bcrypt.hash(password, Salt)
         req.body.password = encryptedPassword;
@@ -20,9 +27,9 @@ exports.register = async (req, res) => {
         user.save();
         const subject = "Welcome to Stylo";
         const text = `This is a greeting note for you as you have registered on our website.Thnks.This is your verification code ${randomNumber}`;
-        sendmail(user.email, subject, text);
+        sendEmail(user.email, subject, text);
 
-        res.json({ status: 200, message: "User created successfully", user })
+        res.json({ status: 200, message: "User created successfully", success:true, user })
     }
     catch (err) {
         console.log(err);
@@ -31,9 +38,13 @@ exports.register = async (req, res) => {
 
 exports.verifyUser = async (req, res) => {
     try{
-        const {code}= req.body;
+        const {code}= req.body
         
-       const user = await User.findOne({code:code});
+       const user = await User.findOne({code:code})
+
+       if(!user){
+        return res.json ({status:404, message:"Wrong Verification Code", success:false})
+       }
        
        
       if(code === user.code){
@@ -41,9 +52,6 @@ exports.verifyUser = async (req, res) => {
         user.code=null;
         user.save();
         var token = jwt.sign({ id: user._id }, 'abc123456');
-      }
-      else{
-        return res.json ({status:404, message:"Wrong Verification Code", success:false})
       }
       return res.json ({status:200, message:"Verified Successfully",token, success:true})
     }
@@ -53,12 +61,34 @@ exports.verifyUser = async (req, res) => {
 }
 
 exports.forgotPassword = async (req, res) => {
-  try{
-     
-  }
-  catch(err){
-    console.log(err);
-  }
+    try{
+        const { email, code } = req.body;
+        const user = await User.findOne({ email: email });
+    
+
+       if(user){
+        const randomNumber = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+       
+        user.isEmailverified=false;
+        user.code=randomNumber;
+        user.save();
+
+        const subject = "Welcome to Stylo";
+        const text = `This is a greeting note for you as you have registered on our website.Thnks.This is your verification code ${randomNumber}`;
+        sendEmail(user.email,subject,text)
+
+         return res.json ({ status:200, message:"Verification Code sent on your Email", success:true})
+
+       }
+       else {
+        return res.json ({ status:404, message:"User not found", success:false})
+      }
+    
+
+    }
+    catch(err){
+        console.log(err)
+    }
 }
 
 exports.login = async (req, res) => {
